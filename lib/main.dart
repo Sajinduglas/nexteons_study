@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:nexteons_study/view/desktop/Desktop_screen.dart';
-import 'package:nexteons_study/view/mobile/mobile_screen.dart';
-import 'package:nexteons_study/view/tab/tab_screen.dart';
+import 'package:get/get.dart';
+import 'package:nexteons_study/routes/my_routes.dart';
+
+import 'package:nexteons_study/screen/student/create/view.dart';
+import 'package:nexteons_study/utils/contstant/app_constants.dart';
+import 'package:url_strategy/url_strategy.dart';
+
+import 'model/student_data_model.dart';
+
+
+RxList<Student> students = [
+  Student(
+      firstname: "sajin",
+      lastname: "duglas",
+      email: "sajin@gmail.com",
+      id: 12,
+      district: "kollam",
+      phoneNumber: "8136855126",
+      pincode: "691001",
+      country: "india")
+].obs;
 
 void main() {
-  runApp(MaterialApp(
+  setPathUrlStrategy();
+  runApp(GetMaterialApp.router(
+    routeInformationParser: router.routeInformationParser,
+    routerDelegate: router.routerDelegate,
+routeInformationProvider: router.routeInformationProvider,
     debugShowCheckedModeBanner: false,
-    home: LayoutBuilderExample(),
+
   ));
 }
-class LayoutBuilderExample extends StatelessWidget {
-  const LayoutBuilderExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints){
-
-      if (constraints.maxWidth > 1024) {
-        return DesktopScreen();
-      } else if (constraints.maxWidth > 663 && constraints.maxWidth < 1024) {
-        return TabScreen();
-      }else{
-        return MobileScreen();
-      }
-
-        },
-      ),
-    );
-  }}

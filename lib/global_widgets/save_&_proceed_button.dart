@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
+import '../utils/colors.dart';
 
 class SaveButtonWidget extends StatelessWidget {
   final String? buttonText;
