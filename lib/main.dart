@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nexteons_study/routes/my_routes.dart';
-
-import 'package:nexteons_study/screen/student/create/view.dart';
-import 'package:nexteons_study/utils/contstant/app_constants.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'model/student_data_model.dart';
-
 
 RxList<Student> students = [
   Student(
@@ -26,8 +22,7 @@ void main() {
   runApp(GetMaterialApp.router(
     routeInformationParser: router.routeInformationParser,
     routerDelegate: router.routerDelegate,
-routeInformationProvider: router.routeInformationProvider,
+    routeInformationProvider: router.routeInformationProvider,
     debugShowCheckedModeBanner: false,
-
   ));
 }

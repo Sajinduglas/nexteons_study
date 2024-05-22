@@ -7,6 +7,7 @@ import 'package:nexteons_study/utils/contstant/app_constants.dart';
 
 import '../../../../main.dart';
 import '../../../../model/student_data_model.dart';
+import '../../../../utils/contstant/route_names.dart';
 import '../../list/responsive/view.dart';
 
 class StudentController extends GetxController {
@@ -68,7 +69,8 @@ class StudentController extends GetxController {
       //need to change here
       // Navigator.push(navigatorKey.currentState!.context,
       //     MaterialPageRoute(builder: (Context) => StudentList()));
-      GoRouter.of(navigatorKey.currentContext!).go("/studentlist");
+      // GoRouter.of(navigatorKey.currentContext!).go(RoutesName.studentList);
+    navigatorKey.currentContext!.goNamed(RoutesName.studentList);
       firstnameController.clear();
       lastnameControl.clear();
       useridController.clear();

@@ -97,6 +97,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../main.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/contstant/app_constants.dart';
+import '../../../../utils/contstant/route_names.dart';
 import '../../../../utils/text_styles.dart';
 import '../../../../global_widgets/student_card_widget.dart';
 import '../../create/view.dart';
@@ -135,7 +136,7 @@ class MobileResultScreen extends StatelessWidget {
                                 //     context,
                                 //     MaterialPageRoute(
                                 //         builder: (context) => CreateStudent()));
-                                GoRouter.of(navigatorKey.currentContext!).go("/createstudent");
+                                GoRouter.of(navigatorKey.currentContext!).goNamed(RoutesName.createStudent);
                               },
                               child: Container(
                                   padding: const EdgeInsets.symmetric(

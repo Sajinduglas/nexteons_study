@@ -7,6 +7,7 @@ import '../../../../global_widgets/student_card_widget.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/contstant/app_constants.dart';
+import '../../../../utils/contstant/route_names.dart';
 import '../../../../utils/text_styles.dart';
 import '../../create/view.dart';
 
@@ -60,7 +61,7 @@ class TabResultScreen extends StatelessWidget {
                               //     MaterialPageRoute(
                               //         builder: (context) =>
                               //             CreateStudent()));
-                              GoRouter.of(navigatorKey.currentContext!).go("/createstudent");
+                              GoRouter.of(navigatorKey.currentContext!).goNamed(RoutesName.createStudent);
                             },
                             child: Container(
                                 padding: const EdgeInsets.symmetric(
