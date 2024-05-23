@@ -32,6 +32,9 @@ class TextFieldWidget extends StatelessWidget {
             title,
             style: TextStyle(fontSize:fontSize ),
           ),
+          SizedBox(
+            height: 10,
+          ),
 
           TextFormField(
               validator: validator,
