@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
 class SaveButtonWidget extends StatelessWidget {
-  final String? buttonText;
+  final String buttonText;
   final Color? buttonColor;
   final VoidCallback? onPressed;
   final double fontSize;
 
 
   SaveButtonWidget(
-      {super.key, this.buttonText, this.buttonColor, this.onPressed, required this.fontSize, });
+      {super.key, required this.buttonText, this.buttonColor, this.onPressed, required this.fontSize, });
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,10 @@ class SaveButtonWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         height: 50,
         minWidth: 200,
-        color: ColorTheme.lightBlue,
+        color:  ColorTheme.lightBlue,
         onPressed: onPressed,
         child: Text(
-          "SAVE & PROCEED",
+          buttonText,
           style: TextStyle(fontSize: fontSize, color: Colors.white),
         ),
       ),

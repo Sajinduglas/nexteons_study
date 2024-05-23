@@ -131,7 +131,7 @@ class TabScreen extends StatelessWidget {
                       ),
                       SaveButtonWidget(
                         onPressed: controller.createStudent,
-                        fontSize: 20,
+                        fontSize: 20, buttonText: 'save',
                       )
                     ],
                   ),

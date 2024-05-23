@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 class TextFieldWidget extends StatelessWidget {
   final String title;
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FormFieldValidator? validator;
   final TextInputType? keyBoardType;
   final List<TextInputFormatter>? inputFormatters ;
@@ -16,7 +16,7 @@ class TextFieldWidget extends StatelessWidget {
     super.key,
     required this.title,
 
-    required this.controller,
+     this.controller,
     this.validator,
     this.keyBoardType, this.inputFormatters, required this.fontSize,
   });
@@ -32,9 +32,7 @@ class TextFieldWidget extends StatelessWidget {
             title,
             style: TextStyle(fontSize:fontSize ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+
           TextFormField(
               validator: validator,
               controller: controller,

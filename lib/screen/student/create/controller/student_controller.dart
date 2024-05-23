@@ -8,7 +8,7 @@ import 'package:nexteons_study/utils/contstant/app_constants.dart';
 import '../../../../main.dart';
 import '../../../../model/student_data_model.dart';
 import '../../../../utils/contstant/route_names.dart';
-import '../../list/responsive/view.dart';
+import '../../list/student_list_view.dart';
 
 class StudentController extends GetxController {
   final firstnameController = TextEditingController();

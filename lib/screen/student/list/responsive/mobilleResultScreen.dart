@@ -4,7 +4,7 @@
 // import '../../../../utils/colors.dart';
 // import '../../../../utils/text_styles.dart';
 // import '../../../../view/widget/student_card_widget.dart';
-// import '../../create/view.dart';
+// import '../../create/student_list_view.dart';
 //
 // class MobileResultScreen extends StatelessWidget {
 //   const MobileResultScreen({super.key});
@@ -100,7 +100,7 @@ import '../../../../utils/contstant/app_constants.dart';
 import '../../../../utils/contstant/route_names.dart';
 import '../../../../utils/text_styles.dart';
 import '../../../../global_widgets/student_card_widget.dart';
-import '../../create/view.dart';
+import '../../create/student_create_view.dart';
 
 class MobileResultScreen extends StatelessWidget {
   const MobileResultScreen({super.key});

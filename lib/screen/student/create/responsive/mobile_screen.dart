@@ -102,7 +102,7 @@ class MobileScreen extends StatelessWidget {
                     child: SaveButtonWidget(
                       onPressed:
                        controller.createStudent,
-                       fontSize: 10,),
+                       fontSize: 10, buttonText: 'Save',),
                   ),
                   Center(
                     child: TextButton(

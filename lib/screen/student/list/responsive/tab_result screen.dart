@@ -9,7 +9,7 @@ import '../../../../utils/colors.dart';
 import '../../../../utils/contstant/app_constants.dart';
 import '../../../../utils/contstant/route_names.dart';
 import '../../../../utils/text_styles.dart';
-import '../../create/view.dart';
+import '../../create/student_create_view.dart';
 
 
 class TabResultScreen extends StatelessWidget {

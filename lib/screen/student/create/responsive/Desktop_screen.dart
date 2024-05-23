@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+
 import 'package:nexteons_study/screen/student/create/controller/student_controller.dart';
 import 'package:nexteons_study/global_widgets/TextField.dart';
 import 'package:nexteons_study/global_widgets/save_&_proceed_button.dart';
 
-import '../../../../utils/colors.dart';
 import '../../../../utils/text_styles.dart';
-import '../../list/responsive/desktop_result_screen.dart';
 
 class DesktopScreen extends StatelessWidget {
-
   final StudentController controller;
+
   DesktopScreen({super.key, required this.controller});
-
-
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -54,7 +49,6 @@ class DesktopScreen extends StatelessWidget {
                         TextFieldWidget(
                           title: "First Name",
                           controller: controller.firstnameController,
-
                           validator: (firstname) {
                             if (firstname!.isEmpty) {
                               return "This field is required";
@@ -63,16 +57,18 @@ class DesktopScreen extends StatelessWidget {
                             } else {
                               return null;
                             }
-                          }, fontSize: size.height*0.02,
+                          },
+                          fontSize: size.height * 0.02,
                         ),
                         TextFieldWidget(
-                            title: "Last Name",
-                            controller: controller.lastnameControl,  fontSize: size.height*0.02,),
+                          title: "Last Name",
+                          controller: controller.lastnameControl,
+                          fontSize: size.height * 0.02,
+                        ),
                         TextFieldWidget(
                           title: "Email Address",
                           controller: controller.mailController,
-                          fontSize: size.height*0.02,
-
+                          fontSize: size.height * 0.02,
                           validator: (email) {
                             if (email == null || email.isEmpty) {
                               return null;
@@ -86,8 +82,7 @@ class DesktopScreen extends StatelessWidget {
                         TextFieldWidget(
                           title: "User ID",
                           controller: controller.useridController,
-                          fontSize: size.height*0.02,
-
+                          fontSize: size.height * 0.02,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "id is required";
@@ -95,37 +90,50 @@ class DesktopScreen extends StatelessWidget {
                           },
                         ),
                         TextFieldWidget(
-                            title: "District", controller: controller.districtController,fontSize: size.height*0.02,),
+                          title: "District",
+                          controller: controller.districtController,
+                          fontSize: size.height * 0.02,
+                        ),
                         TextFieldWidget(
-                            title: "Phone No.", controller: controller.phoneNumberController,fontSize: size.height*0.02,),
+                          title: "Phone No.",
+                          controller: controller.phoneNumberController,
+                          fontSize: size.height * 0.02,
+                        ),
                         TextFieldWidget(
                           title: "Pincode",
                           controller: controller.pinCodeController,
-                          fontSize: size.height*0.02,
+                          fontSize: size.height * 0.02,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           keyBoardType: TextInputType.number,
                         ),
                         TextFieldWidget(
-                            title: "Country", controller: controller.countryController,fontSize: size.height*0.02,),
+                          title: "Country",
+                          controller: controller.countryController,
+                          fontSize: size.height * 0.02,
+                        ),
                       ],
                     ),
                   ),
-                const Spacer(),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                        onPressed:
-                         controller.resetAll,
+                        onPressed: controller.resetAll,
                         child: Text(
                           "RESET ALL",
                         ),
                       ),
-                      SizedBox(width: size.width*0.04,),
+                      SizedBox(
+                        width: size.width * 0.04,
+                      ),
                       SaveButtonWidget(
-                        onPressed: controller.createStudent, fontSize: 20,)
-
+                        onPressed: controller.createStudent,
+                        fontSize: 20,
+                        buttonText: "Save ",
+                      )
                     ],
                   ),
                   const Spacer(),

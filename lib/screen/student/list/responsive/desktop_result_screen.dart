@@ -8,7 +8,7 @@ import '../../../../global_widgets/student_card_widget.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/contstant/route_names.dart';
 import '../../../../utils/text_styles.dart';
-import '../../create/view.dart';
+import '../../create/student_create_view.dart';
 
 
 class DesktopResultScreen extends StatelessWidget {
