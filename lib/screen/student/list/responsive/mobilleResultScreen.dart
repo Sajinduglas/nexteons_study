@@ -173,7 +173,7 @@ class MobileResultScreen extends StatelessWidget {
                               phone: students[index].phoneNumber,
                               pincode: students[index].pincode,
                               country: students[index].country,
-                              fontSize: size.height * 0.010,
+                              fontSize: size.height * 0.015,
                             ),
                     );
                   })
