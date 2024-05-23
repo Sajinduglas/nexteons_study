@@ -23,7 +23,7 @@ class TabScreen extends StatelessWidget {
           child: SizedBox(
             height: double.infinity,
             width: size.width * .5,
-            child: Flexible(
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,85 +34,83 @@ class TabScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Flexible(
-                      child: GridView(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 16,
-                                mainAxisExtent: 115,
-                                mainAxisSpacing: 2,
-                                crossAxisSpacing: 50),
-                        children: [
-                          TextFieldWidget(
-                            title: "First Name",
-                            controller: controller.firstnameController,
-                            validator: (firstname) {
-                              if (firstname!.isEmpty) {
-                                return "This field is required";
-                              } else if (firstname.length < 4) {
-                                return "Atleast 3 characters required";
-                              } else {
-                                return null;
-                              }
-                            },
-                            fontSize: 18,
-                          ),
-                          TextFieldWidget(
-                            title: "Last Name",
-                            controller: controller.lastnameControl,
-                            fontSize: 18,
-                          ),
-                          TextFieldWidget(
-                            title: "Email Address",
-                            controller: controller.mailController,
-                            fontSize: 18,
-                            validator: (email) {
-                              if (email == null || email.isEmpty) {
-                                return null;
-                              } else if (!email.contains('@') ||
-                                  !email.contains('.com')) {
-                                return 'Enter a valid Email';
-                              }
+                    child: GridView(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 16,
+                              mainAxisExtent: 115,
+                              mainAxisSpacing: 2,
+                              crossAxisSpacing: 50),
+                      children: [
+                        TextFieldWidget(
+                          title: "First Name",
+                          controller: controller.firstnameController,
+                          validator: (firstname) {
+                            if (firstname!.isEmpty) {
+                              return "This field is required";
+                            } else if (firstname.length < 4) {
+                              return "Atleast 3 characters required";
+                            } else {
                               return null;
-                            },
-                          ),
-                          TextFieldWidget(
-                            title: "User ID",
-                            controller: controller.useridController,
-                            fontSize: 18,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "id is required";
-                              }
-                            },
-                          ),
-                          TextFieldWidget(
-                            title: "District",
-                            controller: controller.districtController,
-                            fontSize: 18,
-                          ),
-                          TextFieldWidget(
-                              title: "Phone No.",
-                              controller: controller.phoneNumberController,
-                              fontSize: 18),
-                          TextFieldWidget(
-                            title: "Pincode",
-                            controller: controller.pinCodeController,
-                            fontSize: size.height * 0.02,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            keyBoardType: TextInputType.number,
-                          ),
-                          TextFieldWidget(
-                            title: "Country",
-                            controller: controller.countryController,
-                            fontSize: 18,
-                          ),
-                        ],
-                      ),
+                            }
+                          },
+                          fontSize: 18,
+                        ),
+                        TextFieldWidget(
+                          title: "Last Name",
+                          controller: controller.lastnameControl,
+                          fontSize: 18,
+                        ),
+                        TextFieldWidget(
+                          title: "Email Address",
+                          controller: controller.mailController,
+                          fontSize: 18,
+                          validator: (email) {
+                            if (email == null || email.isEmpty) {
+                              return null;
+                            } else if (!email.contains('@') ||
+                                !email.contains('.com')) {
+                              return 'Enter a valid Email';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFieldWidget(
+                          title: "User ID",
+                          controller: controller.useridController,
+                          fontSize: 18,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "id is required";
+                            }
+                          },
+                        ),
+                        TextFieldWidget(
+                          title: "District",
+                          controller: controller.districtController,
+                          fontSize: 18,
+                        ),
+                        TextFieldWidget(
+                            title: "Phone No.",
+                            controller: controller.phoneNumberController,
+                            fontSize: 18),
+                        TextFieldWidget(
+                          title: "Pincode",
+                          controller: controller.pinCodeController,
+                          fontSize: size.height * 0.02,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyBoardType: TextInputType.number,
+                        ),
+                        TextFieldWidget(
+                          title: "Country",
+                          controller: controller.countryController,
+                          fontSize: 18,
+                        ),
+                      ],
                     ),
                   ),
 
