@@ -10,8 +10,6 @@ import 'package:nexteons_study/utils/contstant/app_constants.dart';
 import 'package:nexteons_study/utils/contstant/route_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../student/list/responsive/desktop_result_screen.dart';
-
 class LoginScreenController extends GetxController {
   final nameOrEmailController = TextEditingController();
   final passwordController = TextEditingController();

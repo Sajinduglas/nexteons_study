@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nexteons_study/screen/teachers/list/controller/teachers_data_controller.dart';
+import 'package:nexteons_study/screen/teachers/list/responsive/teachers_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
+import '../../../../model/teachers_model.dart';
 
 class TeachersDataGrid extends StatefulWidget {
   const TeachersDataGrid({super.key});
@@ -9,14 +14,16 @@ class TeachersDataGrid extends StatefulWidget {
 }
 
 class _TeachersDataGridState extends State<TeachersDataGrid> {
+  final controller=Get.put(TeachersDataController());
   late List<Teachers> teachers;
 
   late TeachersDataSource teachersDataSource;
 
   @override
   void initState() {
-    teachers = getTeachersData();
+    teachers = controller.getTeachersData();
     teachersDataSource = TeachersDataSource(teachers);
+    controller.fetchData();
     super.initState();
   }
 
@@ -76,16 +83,7 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
   }
 }
 
-List<Teachers> getTeachersData() {
-  return [
-    Teachers(id: 1, name: "amos", designation: "flutter", salary: 10000),
-    Teachers(id: 2, name: "najeeb", designation: "flutter", salary: 10000),
-    Teachers(id: 1, name: "amos", designation: "flutter", salary: 10000),
-    Teachers(id: 2, name: "najeeb", designation: "flutter", salary: 10000),
-    Teachers(id: 1, name: "amos", designation: "flutter", salary: 10000),
-    Teachers(id: 2, name: "najeeb", designation: "flutter", salary: 10000),
-  ];
-}
+
 
 class TeachersDataSource extends DataGridSource {
   late List<DataGridRow> dataGridRow;
@@ -93,16 +91,17 @@ class TeachersDataSource extends DataGridSource {
   TeachersDataSource(List<Teachers> teacherss) {
     dataGridRow = teacherss
         .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: "ID", value: dataGridRow.id),
-              DataGridCell<String>(columnName: "Name", value: dataGridRow.name),
+              DataGridCell<int>(columnName: "id", value: dataGridRow.id),
+              DataGridCell<String>(columnName: "name", value: dataGridRow.name),
               DataGridCell(
-                  columnName: "Designation", value: dataGridRow.designation),
-              DataGridCell(columnName: "Salary", value: dataGridRow.salary)
+                  columnName: "designation", value: dataGridRow.designation),
+              DataGridCell(columnName: "salary", value: dataGridRow.salary)
             ]))
         .toList();
   }
 
- List<DataGridRow> get rows => dataGridRow;
+  List<DataGridRow> get rows => dataGridRow;
+
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
@@ -124,15 +123,4 @@ class TeachersDataSource extends DataGridSource {
   }
 }
 
-class Teachers {
-  final int id;
-  final String name;
-  final String designation;
-  final int salary;
 
-  Teachers(
-      {required this.id,
-      required this.name,
-      required this.designation,
-      required this.salary});
-}

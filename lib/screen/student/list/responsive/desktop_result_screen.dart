@@ -101,7 +101,7 @@ class DesktopResultScreen extends StatelessWidget {
                           pincode:
                           students[index].pincode,
                           country:
-                          students[index].country, fontSize: size.height*0.020,);
+                          students[index].country, fontSize: size.height*0.015,);
                     },
                   ),),
                 ),

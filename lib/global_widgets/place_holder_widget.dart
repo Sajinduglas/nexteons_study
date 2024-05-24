@@ -51,7 +51,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                 )
               : null,
           drawer: fnCheckMobile(size.width)
-              ? Drawer(backgroundColor:ColorTheme.lightBlue,
+              ? Drawer( width:size.width*0.4 ,backgroundColor:ColorTheme.lightBlue,
                   child: ListView.builder(
                     itemCount: controller.buttonDetails.length,
                     shrinkWrap: true,

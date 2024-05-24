@@ -102,7 +102,7 @@ class TabResultScreen extends StatelessWidget {
                           pincode:
                           students[index].pincode,
                           country:
-                          students[index].country, fontSize: size.height*0.015,);
+                          students[index].country, fontSize: size.height*0.010,);
                     },
                   ),),
                 ),
