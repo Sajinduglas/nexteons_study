@@ -16,27 +16,29 @@ class TabFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      width: 200,
+      width: 250,
       color: ColorTheme.lightBlue,
       padding: const EdgeInsets.only(top: 54, right: 34, left: 34),
-      child: Column(
-        children: [
-          Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset("assets/images/nexteon_image.png")),
-          SizedBox(height: 15,),
-          Obx(() => ListView.builder(
-            itemCount: controller.buttonDetails.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) => MainFrameButton(
-                color: Colors.white,
-                butttonName: controller.buttonDetails[index].name,
-                onpressed: () {
-                  navigatorKey.currentContext!.goNamed(controller.buttonDetails[index].route);
-                }
-            ),
-          ))
-        ],
+      child: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset("assets/images/nexteon_image.png")),
+            SizedBox(height: 15,),
+            Obx(() => ListView.separated(
+              itemCount: controller.buttonDetails.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => MainFrameButton(
+                  color: Colors.white,
+                  butttonName: controller.buttonDetails[index].name,
+                  onpressed: () {
+                    navigatorKey.currentContext!.goNamed(controller.buttonDetails[index].route);
+                  }
+              ), separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 15,); },
+            ))
+          ],
+        ),
       ),
     );
   }

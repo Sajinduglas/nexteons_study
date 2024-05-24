@@ -21,25 +21,27 @@ class DesktopFrame extends StatelessWidget {
       width: 375,
       color: ColorTheme.lightBlue,
       padding: const EdgeInsets.only(top: 74, right: 54, left: 54),
-      child: Column(
-        children: [
-          Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset("assets/images/nexteon_image.png")),
-          SizedBox(
-            height: 20,
-          ),
-          Obx(() => ListView.builder(
-                itemCount: controller.buttonDetails.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => MainFrameButton(
-                    color: Colors.red,
-                    butttonName: controller.buttonDetails[index].name,
-                    onpressed: () {
-                      navigatorKey.currentContext!.goNamed(controller.buttonDetails[index].route);
-                    }),
-              ))
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset("assets/images/nexteon_image.png")),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(() => ListView.separated(
+                  itemCount: controller.buttonDetails.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => MainFrameButton(
+                      color: Colors.white,
+                      butttonName: controller.buttonDetails[index].name,
+                      onpressed: () {
+                        navigatorKey.currentContext!.goNamed(controller.buttonDetails[index].route);
+                      }), separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 15,); },
+                ))
+          ],
+        ),
       ),
     );
   }

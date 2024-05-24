@@ -7,6 +7,7 @@ import 'package:nexteons_study/screen/main_frame/responsive/desktop_frame.dart';
 import 'package:nexteons_study/screen/main_frame/responsive/mobile_appbar_frame.dart';
 import 'package:nexteons_study/screen/main_frame/responsive/tab_frame.dart';
 import 'package:nexteons_study/utils/check_size.dart';
+import 'package:nexteons_study/utils/colors.dart';
 
 import '../shell_route_reference.dart';
 import '../utils/contstant/app_constants.dart';
@@ -50,17 +51,20 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                 )
               : null,
           drawer: fnCheckMobile(size.width)
-              ? Drawer(
+              ? Drawer(backgroundColor:ColorTheme.lightBlue,
                   child: ListView.builder(
                     itemCount: controller.buttonDetails.length,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => MainFrameButton(
-                        color: Colors.white,
-                        butttonName: controller.buttonDetails[index].name,
-                        onpressed: () {
-                          navigatorKey.currentContext!
-                              .goNamed(controller.buttonDetails[index].route);
-                        }),
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: MainFrameButton(
+                          color: Colors.white,
+                          butttonName: controller.buttonDetails[index].name,
+                          onpressed: () {
+                            navigatorKey.currentContext!
+                                .goNamed(controller.buttonDetails[index].route);
+                          }),
+                    ),
                   ),
                 )
               : null,
