@@ -59,7 +59,7 @@ class MobileLoginScreen extends StatelessWidget {
                     if(name!.isEmpty){
                       return "This field is required";
                     }else if(name.length<6||!name.contains('@') ){
-                      return "Enter a valid Email or name";
+                      return "Enter a valid Email ";
                     }
                     return null;
                   },
