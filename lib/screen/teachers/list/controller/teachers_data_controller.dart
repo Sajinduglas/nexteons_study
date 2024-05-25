@@ -1,15 +1,17 @@
 
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-
 import '../../../../model/dpirate_model.dart';
 import '../../../../utils/contstant/app_config.dart';
 
 class TeachersDataController extends GetxController {
   final Dio dio = Dio();
   var dpiRateList = <ListElement>[].obs;
+  var isLoading = false.obs; // Add isLoading observable
 
   Future<void> fetchData() async {
+    isLoading.value = true; // Set loading to true
     final body = {
       'query': '''
       query List(\$filterOptions: ListDpiInput!) {
@@ -45,19 +47,21 @@ class TeachersDataController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        print(response.data);
+        print("Fetch Data Response: ${response.data}");
         DpiRateModel dpiRateModel = DpiRateModel.fromJson(response.data);
         dpiRateList.value = dpiRateModel.data?.dpiRateList?.list ?? [];
       } else {
-        print("Error: ${response.statusCode}");
+        print("Error: ${response.statusCode} - ${response.statusMessage}");
       }
     } catch (e) {
-      print("Error: $e");
+      print("Error fetching data: $e");
+    } finally {
+      isLoading.value = false; // Set loading to false
     }
   }
 
   Future<void> addDpiRate(ListElement dpiRate) async {
+    isLoading.value = true; // Set loading to true
     final body = {
       'query': '''
 mutation DPI_Rate_Create(\$createDpiRateInput: CreateDpiRateInput!) {
@@ -76,6 +80,7 @@ mutation DPI_Rate_Create(\$createDpiRateInput: CreateDpiRateInput!) {
     };
     final String token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+
     try {
       final response = await dio.post(
         AppConfig.url,
@@ -85,15 +90,115 @@ mutation DPI_Rate_Create(\$createDpiRateInput: CreateDpiRateInput!) {
         ),
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        print(response.data);
-        dpiRateList.add(dpiRate);
+        print("Add DPI Rate Response: ${response.data}");
+        final newId = response.data['data']['DPI_Rate_Create']['_id'];
+        dpiRateList.add(
+            ListElement(id: newId, name: dpiRate.name, rate: dpiRate.rate));
       } else {
-        print("error${response.statusCode}");
+        print("Error: ${response.statusCode} - ${response.statusMessage}");
       }
     } catch (e) {
-      print("Error: $e");
+      print("Error adding DPI rate: $e");
+    } finally {
+      isLoading.value = false; // Set loading to false
     }
   }
 
+  Future<void> updateDpiRate(ListElement dpiRate) async {
+    final body = {
+      'query': '''
+mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
+  DPI_Rate_Update(updateDpiRateInput: \$updateDpiRateInput) {
+    _id
+  }
 }
+'''
+      ,
+      'variables': {
+        "updateDpiRateInput": {
+          "_branchId": "6631da5ce9efa0bd84a86852",
+          "_editCount": -1,
+          "_id": dpiRate.id,
+          "_name": dpiRate.name,
+          "_rate": dpiRate.rate
+        }
+      }
+      ,
+
+    };
+
+    final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+
+    try {
+      final response = await dio.post(
+        AppConfig.url,
+        data: body,
+        options: Options(
+          headers: {'X-Tenant-Id': "RL0582", "Authorization": "Bearer $token"},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.statusCode);
+        print(response.data);
+        final index = dpiRateList.indexWhere((element) =>
+        element.id == dpiRate.id);
+        if (index != -1) {
+          dpiRateList[index] = dpiRate;
+        }
+      } else {
+        print("Error: ${response.statusCode}");
+        // Handle error response
+      }
+    } catch (e) {
+      print("Error: $e");
+      // Handle error
+    }
+  }
+  Future<void> deleteDpiRate(String id) async {
+    final body = {
+      'query': '''
+mutation DPI_Rate_StatusChange(\$statusChange: StatusChangeInput!) {
+  DPI_Rate_StatusChange(statusChange: \$statusChange) {
+    message
+}
+}
+''',
+      'variables': {
+        "statusChange": {
+          "_editCount": -1,
+          "_logDescription": null,
+          "_status": "DELETE",
+          "ids": [id]
+        }
+      }
+    };
+
+    final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+
+    try {
+      final response = await dio.post(
+        AppConfig.url,
+        data: body,
+        options: Options(
+          headers: {'X-Tenant-Id': "RL0582", "Authorization": "Bearer $token"},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.statusCode);
+        print(response.data);
+        // Handle success response
+      } else {
+        print("Error: ${response.statusCode}");
+        // Handle error response
+      }
+    } catch (e) {
+      print("Error: $e");
+      // Handle error
+    }
+  }
+}
+
+
+
