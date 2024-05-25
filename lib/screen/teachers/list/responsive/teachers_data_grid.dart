@@ -128,6 +128,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nexteons_study/global_widgets/save_&_proceed_button.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 
@@ -156,44 +157,49 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
     return Scaffold(
       body: Obx(() {
         final teachersDataSource = TeachersDataSource(controller.dpiRateList);
-        return SfDataGrid(
-          selectionMode: SelectionMode.multiple,
-          allowSorting: true,
-          source: teachersDataSource,
-          columns: [
-            GridColumn(
-              columnName: 'id',
-              label: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'ID',
-                  overflow: TextOverflow.ellipsis,
+        return Row(crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SfDataGrid(
+              selectionMode: SelectionMode.multiple,
+              allowSorting: true,
+              source: teachersDataSource,
+              columns: [
+                GridColumn(
+                  columnName: 'id',
+                  label: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      'ID',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'name',
-              label: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Name',
-                  overflow: TextOverflow.ellipsis,
+                GridColumn(
+                  columnName: 'name',
+                  label: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Name',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'rate',
-              label: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'Rate',
-                  overflow: TextOverflow.ellipsis,
+                GridColumn(
+                  columnName: 'rate',
+                  label: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      'Rate',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
+            SaveButtonWidget(buttonText: "Craete", fontSize: 13)
           ],
         );
       }),
