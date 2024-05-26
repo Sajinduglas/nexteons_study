@@ -4,17 +4,19 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../model/dpirate_model.dart';
-import '../controller/teachers_data_controller.dart';
+import '../controller/dpi_rate_controller.dart';
+import 'dpi_data_source.dart';
 
-class TeachersDataGrid extends StatefulWidget {
-  const TeachersDataGrid({super.key});
+
+class DpiDataGrid extends StatefulWidget {
+  const DpiDataGrid({super.key});
 
   @override
-  State<TeachersDataGrid> createState() => _TeachersDataGridState();
+  State<DpiDataGrid> createState() => _DpiDataGridState();
 }
 
-class _TeachersDataGridState extends State<TeachersDataGrid> {
-  final controller = Get.put(TeachersDataController());
+class _DpiDataGridState extends State<DpiDataGrid> {
+  final controller = Get.put(DpiRateController());
 
   @override
   void initState() {
@@ -22,9 +24,8 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
     controller.fetchData();
   }
 
-  void _showAddDialog() {
-    final nameController = TextEditingController();
-    final rateController = TextEditingController();
+  void showAddDialog() {
+
 
     showDialog(
       context: context,
@@ -35,11 +36,11 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: nameController,
+                controller: controller.nameController,
                 decoration: InputDecoration(labelText: 'Name'),
               ),
               TextField(
-                controller: rateController,
+                controller: controller.rateController,
                 decoration: InputDecoration(labelText: 'Rate'),
                 keyboardType: TextInputType.number,
               ),
@@ -54,9 +55,11 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
             ),
             TextButton(
               onPressed: () {
-                final name = nameController.text;
-                final rate = int.tryParse(rateController.text) ?? 0;
+                final name = controller.nameController.text;
+                final rate = int.tryParse(controller.rateController.text) ?? 0;
                 controller.addDpiRate(ListElement(name: name, rate: rate));
+                controller.nameController.clear();
+                controller.rateController.clear();
                 Navigator.of(context).pop();
               },
               child: Text('Add'),
@@ -67,7 +70,7 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
     );
   }
 
-  void _showEditDialog(ListElement dpiRate) {
+  void showEditDialog(ListElement dpiRate) {
     final nameController = TextEditingController(text: dpiRate.name);
     final rateController = TextEditingController(text: dpiRate.rate.toString());
 
@@ -121,14 +124,14 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
             child: CircularProgressIndicator(color: Colors.blue),
           );
         } else {
-          final teachersDataSource = TeachersDataSource(controller.dpiRateList, _showEditDialog, controller.deleteDpiRate);
+          final dpiDataSource = DpiDataSource(showEditDialog, controller);
           return Column(
             children: [
               Expanded(
                 child: SfDataGrid(
                   selectionMode: SelectionMode.multiple,
                   allowSorting: true,
-                  source: teachersDataSource,
+                  source: dpiDataSource,
                   columns: [
                     GridColumn(
                       columnName: 'id',
@@ -203,49 +206,10 @@ class _TeachersDataGridState extends State<TeachersDataGrid> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showAddDialog,
+        onPressed: showAddDialog,
         child: Icon(Icons.add),
       ),
     );
   }
 }
 
-class TeachersDataSource extends DataGridSource {
-  List<DataGridRow> dataGridRows = [];
-  final Function(ListElement) onEdit;
-  final Function(String) onDelete;
-
-  TeachersDataSource(List<ListElement> dpiRateList, this.onEdit, this.onDelete) {
-    dataGridRows = dpiRateList.map<DataGridRow>((dataGridRow) {
-      return DataGridRow(cells: [
-        DataGridCell<String>(columnName: 'id', value: dataGridRow.id),
-        DataGridCell<String>(columnName: 'name', value: dataGridRow.name),
-        DataGridCell<int>(columnName: 'rate', value: dataGridRow.rate),
-        DataGridCell<IconButton>(columnName: 'edit', value: IconButton(icon: Icon(Icons.edit), onPressed: () => onEdit(dataGridRow))),
-        DataGridCell<IconButton>(columnName: 'delete', value: IconButton(icon: Icon(Icons.delete), onPressed: () => onDelete(dataGridRow.id!))),
-      ]);
-    }).toList();
-  }
-
-  @override
-  List<DataGridRow> get rows => dataGridRows;
-
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-      cells: row.getCells().map<Widget>((dataGridCell) {
-        if (dataGridCell.columnName == 'edit' || dataGridCell.columnName == 'delete') {
-          return dataGridCell.value;
-        }
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          alignment: dataGridCell.columnName == 'rate' ? Alignment.centerRight : Alignment.centerLeft,
-          child: Text(
-            dataGridCell.value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-        );
-      }).toList(),
-    );
-  }
-}

@@ -4,6 +4,6 @@ class RoutesName{
   static String createStudent="Createstudent";
   static String studentList="studentlist";
   static String login="login";
-  static String teacherList="teacherList";
+  static String dpiRateList="dpiratelist";
 
 }

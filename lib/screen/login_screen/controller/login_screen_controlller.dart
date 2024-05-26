@@ -58,9 +58,9 @@ class LoginScreenController extends GetxController {
           print("I");
           var accessToken =
               response.data['data']['Auth_Login']['accessToken'].toString();
-          print("saccess $accessToken"); //
+          print("success $accessToken"); //
           preferences = await SharedPreferences.getInstance();
-          preferences.setString(AppConfig.accessToken, jsonEncode(accessToken));
+          preferences.setString(AppConfig.accessToken, accessToken);
           preferences.setBool(AppConfig.checkToken, true);
 
           ///encode cheyunnai string akaan

@@ -5,10 +5,12 @@ import 'package:nexteons_study/utils/contstant/app_config.dart';
 import 'package:nexteons_study/utils/contstant/route_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screen/dpi_rate_list/list/dpi_rate_view.dart';
+
 import '../screen/login_screen/login_view.dart';
 import '../screen/student/create/student_create_view.dart';
 import '../screen/student/list/student_list_view.dart';
-import '../screen/teachers/list/teachers_view.dart';
+
 import '../utils/contstant/app_constants.dart';
 
 final router = GoRouter(
@@ -45,9 +47,9 @@ final router = GoRouter(
       builder: (context, state) => const StudentList(),
     ),
     GoRoute(
-      name: RoutesName.teacherList,
-      path: '/teacherslist',
-      builder: (context, state) => const TeachersView(),
+      name: RoutesName.dpiRateList,
+      path: '/dpiratelist',
+      builder: (context, state) => const DpiRateView(),
     ),
   ],
 );
