@@ -14,10 +14,9 @@ class DpiRateView extends StatefulWidget {
 class _DpiRateViewState extends State<DpiRateView> {
   @override
   Widget build(BuildContext context) {
-    return PlaceHolderWidget(
-        child: ResponsiveBuilder(
-            desktopScreen: DpiDataGrid(),
-            tabScreen: DpiDataGrid(),
-            mobileScreen: DpiDataGrid()));
+    return ResponsiveBuilder(
+        desktopScreen: DpiDataGrid(),
+        tabScreen: DpiDataGrid(),
+        mobileScreen: DpiDataGrid());
   }
 }

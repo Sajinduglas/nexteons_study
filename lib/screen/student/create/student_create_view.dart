@@ -32,16 +32,15 @@ class _CreateStudentState extends State<CreateStudent> {
 
   @override
   Widget build(BuildContext context) {
-    return PlaceHolderWidget(
-        child: ResponsiveBuilder(
-            desktopScreen: DesktopScreen(
-              controller: controller,
-            ),
-            tabScreen: TabScreen(
-              controller: controller,
-            ),
-            mobileScreen: MobileScreen(
-              controller: controller,
-            )));
+    return ResponsiveBuilder(
+        desktopScreen: DesktopScreen(
+          controller: controller,
+        ),
+        tabScreen: TabScreen(
+          controller: controller,
+        ),
+        mobileScreen: MobileScreen(
+          controller: controller,
+        ));
   }
 }

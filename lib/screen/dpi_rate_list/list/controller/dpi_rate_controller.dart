@@ -1,11 +1,13 @@
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nexteons_study/repository/dpi_rate_list/dpi_rate_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../model/dpirate_model.dart';
+import '../../../../utils/appsnackbar.dart';
 import '../../../../utils/contstant/app_config.dart';
+import '../../../../utils/contstant/app_constants.dart';
 
 class DpiRateController extends GetxController {
   late SharedPreferences preferences;
@@ -49,27 +51,23 @@ class DpiRateController extends GetxController {
         }
       }
     };
-    // final String token =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+
 
     try {
-      final response = await dio.post(
-        AppConfig.url,
-        data: body,
-        options: Options(
-          headers: headers,
-        ),
-      );
+     var responseBody= await DpiRateService.fetchData(header: headers, data: body);
 
-      if (response.statusCode == 200) {
-        print("Fetch Data Response: ${response.data}");
-        DpiRateModel dpiRateModel = DpiRateModel.fromJson(response.data);
+      if (responseBody["data"]!=null) {
+
+        DpiRateModel dpiRateModel = DpiRateModel.fromJson(responseBody);
         dpiRateList.value = dpiRateModel.data?.dpiRateList?.list ?? [];
+        AppSnackbar.oneTimeSnackBar("Success",
+            context: navigatorKey.currentContext!, bgColor: Colors.green);
       } else {
-        print("Error: ${response.statusCode} - ${response.statusMessage}");
+        AppSnackbar.oneTimeSnackBar("Failed to Fetch Data",
+            context: navigatorKey.currentContext!, bgColor: Colors.red);
       }
     } catch (e) {
-      print("Error fetching data: $e");
+      print("an error occured $e");
     } finally {
       isLoading.value = false; // Set loading to false
     }
@@ -99,25 +97,24 @@ mutation DPI_Rate_Create(\$createDpiRateInput: CreateDpiRateInput!) {
         }
       },
     };
-    // final String token =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
 
     try {
-      final response = await dio.post(
-        AppConfig.url,
-        data: body,
-        options: Options(headers: headers),
-      );
-      if (response.statusCode == 200) {
-        print("Add DPI Rate Response: ${response.data}");
-        final newId = response.data['data']['DPI_Rate_Create']['_id'];
+      var responsebody =
+      await DpiRateService.fetchData(header: headers, data: body);
+      if (responsebody["data"]!=null) {
+
+        final newId = responsebody['data']['DPI_Rate_Create']['_id'];
         dpiRateList.add(
             ListElement(id: newId, name: dpiRate.name, rate: dpiRate.rate));
+        AppSnackbar.oneTimeSnackBar("Success",
+            context: navigatorKey.currentContext!, bgColor: Colors.green);
+        await fetchData();
       } else {
-        print("Error: ${response.statusCode} - ${response.statusMessage}");
+        AppSnackbar.oneTimeSnackBar("Failed to Fetch Data",
+            context: navigatorKey.currentContext!, bgColor: Colors.red);
       }
     } catch (e) {
-      print("Error adding DPI rate: $e");
+      print("an error occured: $e");
     } finally {
       isLoading.value = false; // Set loading to false
     }
@@ -149,27 +146,25 @@ mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
       },
     };
 
-    // final String token =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
 
     try {
-      final response = await dio.post(
-        AppConfig.url,
-        data: body,
-        options: Options(headers: headers),
-      );
+      var responsebody =
+      await DpiRateService.fetchData(header: headers, data: body);
 
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        print(response.data);
+
+      if (responsebody["data"] != null) {
+
         final index =
-            dpiRateList.indexWhere((element) => element.id == dpiRate.id);
+        dpiRateList.indexWhere((element) => element.id == dpiRate.id);
         if (index != -1) {
           dpiRateList[index] = dpiRate;
+          AppSnackbar.oneTimeSnackBar("edited Successfully",
+              context: navigatorKey.currentContext!, bgColor: Colors.green);
+          await fetchData();
         }
       } else {
-        print("Error: ${response.statusCode}");
-        // Handle error response
+        AppSnackbar.oneTimeSnackBar("Failed to Fetch Data",
+            context: navigatorKey.currentContext!, bgColor: Colors.red);
       }
     } catch (e) {
       print("Error: $e");
@@ -202,27 +197,23 @@ mutation DPI_Rate_StatusChange(\$statusChange: StatusChangeInput!) {
       }
     };
 
-    // final String token =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
 
     try {
-      final response = await dio.post(
-        AppConfig.url,
-        data: body,
-        options: Options(headers: headers),
-      );
+      var responsebody =
+      await DpiRateService.fetchData(header: headers, data: body);
 
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        print(response.data);
-        // Handle success response
+      if (responsebody["data"]!=null) {
+        AppSnackbar.oneTimeSnackBar("deleted ",
+            context: navigatorKey.currentContext!, bgColor: Colors.green);
+
         await fetchData();
       } else {
-        print("Error: ${response.statusCode}");
+        AppSnackbar.oneTimeSnackBar("Failed to Fetch Data",
+            context: navigatorKey.currentContext!, bgColor: Colors.red);
         // Handle error response
       }
     } catch (e) {
-      print("Error: $e");
+      print(" an Error in api: $e");
       // Handle error
     }
   }

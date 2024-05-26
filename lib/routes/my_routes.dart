@@ -1,6 +1,7 @@
 import 'dart:js';
 
 import 'package:go_router/go_router.dart';
+import 'package:nexteons_study/global_widgets/place_holder_widget.dart';
 import 'package:nexteons_study/utils/contstant/app_config.dart';
 import 'package:nexteons_study/utils/contstant/route_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,6 @@ final router = GoRouter(
       return "/login";
     } else {
       if (state.fullPath == "/login") {
-
         return "/studentlist";
       } else {
         print("state${state.fullPath}");
@@ -36,21 +36,26 @@ final router = GoRouter(
       path: '/login',
       builder: (context, state) => LoginView(),
     ),
-    GoRoute(
-      name: RoutesName.createStudent,
-      path: '/createstudent',
-      builder: (context, state) => const CreateStudent(),
-    ),
-    GoRoute(
-      name: RoutesName.studentList,
-      path: '/studentlist',
-      builder: (context, state) => const StudentList(),
-    ),
-    GoRoute(
-      name: RoutesName.dpiRateList,
-      path: '/dpiratelist',
-      builder: (context, state) => const DpiRateView(),
-    ),
+    ShellRoute(
+        builder: (context, state, child) => PlaceHolderWidget(child: child),
+        routes: [
+          GoRoute(
+              name: RoutesName.studentList,
+              path: '/studentlist',
+              builder: (context, state) => const StudentList(),
+              routes: [
+                GoRoute(
+                  name: RoutesName.createStudent,
+                  path: 'createstudent',
+                  builder: (context, state) => const CreateStudent(),
+                ),
+              ]),
+          GoRoute(
+            name: RoutesName.dpiRateList,
+            path: '/dpiratelist',
+            builder: (context, state) => const DpiRateView(),
+          ),
+        ])
   ],
 );
 

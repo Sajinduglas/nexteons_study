@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nexteons_study/utils/contstant/app_constants.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../model/dpirate_model.dart';
@@ -8,27 +10,16 @@ import '../controller/dpi_rate_controller.dart';
 import 'dpi_data_source.dart';
 
 
-class DpiDataGrid extends StatefulWidget {
-  const DpiDataGrid({super.key});
+class DpiDataGrid extends StatelessWidget {
+   DpiDataGrid({super.key});
 
-  @override
-  State<DpiDataGrid> createState() => _DpiDataGridState();
-}
-
-class _DpiDataGridState extends State<DpiDataGrid> {
   final controller = Get.put(DpiRateController());
-
-  @override
-  void initState() {
-    super.initState();
-    controller.fetchData();
-  }
 
   void showAddDialog() {
 
 
     showDialog(
-      context: context,
+      context: navigatorKey.currentContext!,
       builder: (context) {
         return AlertDialog(
           title: Text('Add DPI Rate'),
@@ -49,7 +40,7 @@ class _DpiDataGridState extends State<DpiDataGrid> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                navigatorKey.currentContext!.pop();
               },
               child: Text('Cancel'),
             ),
@@ -60,7 +51,7 @@ class _DpiDataGridState extends State<DpiDataGrid> {
                 controller.addDpiRate(ListElement(name: name, rate: rate));
                 controller.nameController.clear();
                 controller.rateController.clear();
-                Navigator.of(context).pop();
+                navigatorKey.currentContext!.pop();
               },
               child: Text('Add'),
             ),
@@ -75,7 +66,7 @@ class _DpiDataGridState extends State<DpiDataGrid> {
     final rateController = TextEditingController(text: dpiRate.rate.toString());
 
     showDialog(
-      context: context,
+      context: navigatorKey.currentContext!,
       builder: (context) {
         return AlertDialog(
           title: Text('Edit DPI Rate'),
@@ -97,6 +88,7 @@ class _DpiDataGridState extends State<DpiDataGrid> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                navigatorKey.currentContext!.pop();
               },
               child: Text('Cancel'),
             ),
@@ -105,7 +97,8 @@ class _DpiDataGridState extends State<DpiDataGrid> {
                 final name = nameController.text;
                 final rate = int.tryParse(rateController.text) ?? 0;
                 controller.updateDpiRate(ListElement(id: dpiRate.id, name: name, rate: rate));
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                navigatorKey.currentContext!.pop();
               },
               child: Text('Save'),
             ),

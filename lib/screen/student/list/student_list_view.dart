@@ -16,11 +16,9 @@ class StudentList extends StatefulWidget {
 class _StudentListState extends State<StudentList> {
   @override
   Widget build(BuildContext context) {
-    return PlaceHolderWidget(
-      child: ResponsiveBuilder(
-          desktopScreen: DesktopResultScreen(),
-          tabScreen: TabResultScreen(),
-          mobileScreen: MobileResultScreen()),
-    );
+    return ResponsiveBuilder(
+        desktopScreen: DesktopResultScreen(),
+        tabScreen: TabResultScreen(),
+        mobileScreen: MobileResultScreen());
   }
 }
