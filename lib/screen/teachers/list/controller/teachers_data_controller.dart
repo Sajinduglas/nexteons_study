@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import '../../../../model/dpirate_model.dart';
@@ -9,6 +7,10 @@ class TeachersDataController extends GetxController {
   final Dio dio = Dio();
   var dpiRateList = <ListElement>[].obs;
   var isLoading = false.obs; // Add isLoading observable
+  void onInit() {
+    super.onInit();
+    fetchData();
+  }
 
   Future<void> fetchData() async {
     isLoading.value = true; // Set loading to true
@@ -112,8 +114,7 @@ mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
     _id
   }
 }
-'''
-      ,
+''',
       'variables': {
         "updateDpiRateInput": {
           "_branchId": "6631da5ce9efa0bd84a86852",
@@ -122,12 +123,11 @@ mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
           "_name": dpiRate.name,
           "_rate": dpiRate.rate
         }
-      }
-      ,
-
+      },
     };
 
-    final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+    final String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
 
     try {
       final response = await dio.post(
@@ -141,8 +141,8 @@ mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
       if (response.statusCode == 200) {
         print(response.statusCode);
         print(response.data);
-        final index = dpiRateList.indexWhere((element) =>
-        element.id == dpiRate.id);
+        final index =
+            dpiRateList.indexWhere((element) => element.id == dpiRate.id);
         if (index != -1) {
           dpiRateList[index] = dpiRate;
         }
@@ -155,6 +155,7 @@ mutation DPI_Rate_Update(\$updateDpiRateInput: UpdateDpiRateInput!) {
       // Handle error
     }
   }
+
   Future<void> deleteDpiRate(String id) async {
     final body = {
       'query': '''
@@ -174,7 +175,8 @@ mutation DPI_Rate_StatusChange(\$statusChange: StatusChangeInput!) {
       }
     };
 
-    final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
+    final String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdXNlcklkXyI6IjY2MzFkYTVkZTllZmEwYmQ4NGE4NjhmMiIsIl9mb3JjZUxvZ291dF8iOi0xLCJfZGV2aWNlX2lkXyI6IjY2NTA1MjNkNmY4YTQ3MGViMTQ3MTE5OCIsIl91c2VyVHlwZV8iOjAsIl9jcml0aWNhbEVkaXRDb3VudF8iOi0xLCJpYXQiOjE3MTY1Mzk5NjUsImV4cCI6MTcxNzQwMzk2NSwiYXVkIjoiNjYzMWRhNWRlOWVmYTBiZDg0YTg2OGYyIiwiaXNzIjoiTmV4dGVvbnMuY29tIn0.7lP49n4xPrY8DHQ76D-3H9IBlFTj01C6WS-mxgZCGQY";
 
     try {
       final response = await dio.post(
@@ -189,6 +191,7 @@ mutation DPI_Rate_StatusChange(\$statusChange: StatusChangeInput!) {
         print(response.statusCode);
         print(response.data);
         // Handle success response
+        await fetchData();
       } else {
         print("Error: ${response.statusCode}");
         // Handle error response
@@ -199,6 +202,3 @@ mutation DPI_Rate_StatusChange(\$statusChange: StatusChangeInput!) {
     }
   }
 }
-
-
-
