@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -9,15 +8,12 @@ import '../../../../model/dpirate_model.dart';
 import '../controller/dpi_rate_controller.dart';
 import 'dpi_data_source.dart';
 
-
 class DpiDataGrid extends StatelessWidget {
-   DpiDataGrid({super.key});
+  DpiDataGrid({super.key});
 
   final controller = Get.put(DpiRateController());
 
   void showAddDialog() {
-
-
     showDialog(
       context: navigatorKey.currentContext!,
       builder: (context) {
@@ -96,7 +92,8 @@ class DpiDataGrid extends StatelessWidget {
               onPressed: () {
                 final name = nameController.text;
                 final rate = int.tryParse(rateController.text) ?? 0;
-                controller.updateDpiRate(ListElement(id: dpiRate.id, name: name, rate: rate));
+                controller.updateDpiRate(
+                    ListElement(id: dpiRate.id, name: name, rate: rate));
                 // Navigator.of(context).pop();
                 navigatorKey.currentContext!.pop();
               },
@@ -205,4 +202,3 @@ class DpiDataGrid extends StatelessWidget {
     );
   }
 }
-

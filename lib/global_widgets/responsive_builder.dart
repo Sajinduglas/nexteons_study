@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/check_size.dart';
+
 class ResponsiveBuilder extends StatelessWidget {
   ResponsiveBuilder({super.key, required this.desktopScreen, required this.tabScreen, required this.mobileScreen});
 
@@ -9,13 +11,13 @@ class ResponsiveBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size= MediaQuery.of(context).size.width;
+    var size= MediaQuery.of(context).size;
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints){
 
-        if (size> 1024) {
+        if (fnCheckDesktop(size.width)) {
           return desktopScreen;
-        } else if (size > 650 && size < 1024) {
+        } else if (fnCheckTab(size.width)) {
           return tabScreen;
         }else{
           return mobileScreen;
